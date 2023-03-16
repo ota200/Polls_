@@ -1,24 +1,36 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 
 export default function More(props) {
 
-  const [word,setWord] = useState("")
-  const [title,setTitle] = useState("")
-  var today = new Date(),
+  const [time, setTime] = useState();
 
-  var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds(); 
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime(new Date().toLocaleString());
+    }, 1000);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 
   return (
-    <div>
-        <form>
-            <input type="text" value="Title"></input>
-            <input type="text" value="Data"></input>
-            <p>Date: 3/3/23</p>
-            <p>{Date().toLocaleString()}</p>
+    <>
+      <form>
+        <label>
+          Title: 
+          <input type="text"/>
+        </label>
+        <br/>
 
-        </form>
-        
-        <button onclick={props.del}>x</button>
-    </div>
+
+        <label>
+          Notes: 
+          <textarea type="text"/>
+        </label>
+      </form> 
+      <h1>{time}</h1>
+      <p>{time}</p>  
+    </>
   );
 }
